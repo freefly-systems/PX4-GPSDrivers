@@ -265,7 +265,7 @@ GPSDriverUBX::configure(unsigned &baudrate, const GPSConfig &config)
 
 		if (sendMessage(UBX_MSG_CFG_VALSET, (uint8_t *)&_buf, cfg_valset_msg_size)) {
 
-			if (waitForAck(UBX_MSG_CFG_VALSET, UBX_CONFIG_TIMEOUT, true) == 0) {
+			if (waitForAck(UBX_MSG_CFG_VALSET, 2000, true) == 0) {
 				cfg_valset_success = true;
 			}
 		}
