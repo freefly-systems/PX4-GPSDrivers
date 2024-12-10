@@ -559,10 +559,10 @@ int GPSDriverUBX::configureDevice(const GPSConfig &config, const int32_t uart2_b
 	int rate_meas;
 
 	if (_mode != UBXMode::Normal) {
-		rate_meas = 125; //8Hz for heading.
+		rate_meas = 200; //5Hz for heading.
 
 	} else {
-		rate_meas = ((_board == Board::u_blox9_F9P_L1L2) || (_board == Board::u_blox9_F9P_L1L5)) ? 100 : 125;
+		rate_meas = ((_board == Board::u_blox9_F9P_L1L2) || (_board == Board::u_blox9_F9P_L1L5)) ? 145 : 200;
 	}
 
 	cfgValset<uint16_t>(UBX_CFG_KEY_RATE_MEAS, rate_meas, cfg_valset_msg_size);
