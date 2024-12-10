@@ -1031,6 +1031,12 @@ private:
 	int initCfgValset();
 
 	/**
+	 * Init _buf as CFG-VALSET
+	 * @return size of the message (without any config values)
+	 */
+	int initCfgValset(bool write_to_flash);
+
+	/**
 	 * Start or restart the survey-in procees. This is only used in RTCM ouput mode.
 	 * It will be called automatically after configuring.
 	 * @return 0 on success, <0 on error

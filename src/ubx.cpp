@@ -614,7 +614,7 @@ int GPSDriverUBX::configureDevice(const GNSSSystemsMask &gnssSystems, const int3
 		}
 
 		// send SBAS config separately, because it seems to be buggy (with u-center, too)
-		cfg_valset_msg_size = initCfgValset();
+		cfg_valset_msg_size = initCfgValset(true);
 
 		if (gnssSystems & GNSSSystemsMask::ENABLE_SBAS) {
 			UBX_DEBUG("GNSS Systems: Use SBAS");
@@ -781,8 +781,17 @@ int GPSDriverUBX::configureDevice(const GNSSSystemsMask &gnssSystems, const int3
 
 int GPSDriverUBX::initCfgValset()
 {
+	// Call the overloaded version with default false
+	return initCfgValset(false);
+}
+
+int GPSDriverUBX::initCfgValset(bool write_to_flash)
+{
 	memset(&_buf.payload_tx_cfg_valset, 0, sizeof(_buf.payload_tx_cfg_valset));
 	_buf.payload_tx_cfg_valset.layers = UBX_CFG_LAYER_RAM;
+	if (write_to_flash) {
+		_buf.payload_tx_cfg_valset.layers |= UBX_CFG_LAYER_FLASH;
+	}
 	return sizeof(_buf.payload_tx_cfg_valset) - sizeof(_buf.payload_tx_cfg_valset.cfgData);
 }
 
