@@ -247,6 +247,12 @@ public:
 	 */
 	virtual bool shouldInjectRTCM() { return true; }
 
+	/**
+	 * Allow a driver to control whether emitted RTCM is republished on the inject_data
+	 * topic as corrections for other receivers
+	 */
+	virtual bool shouldPublishRTCM() { return true; }
+
 protected:
 
 	/**
