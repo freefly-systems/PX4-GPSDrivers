@@ -1000,7 +1000,18 @@ public:
 	int receive(unsigned timeout) override;
 	int reset(GPSRestartType restart_type) override;
 
-	bool shouldInjectRTCM() override { return _mode != UBXMode::RoverWithMovingBase; }
+	bool shouldInjectRTCM() override
+	{
+		// A rover already receiving corrections on its own UART2 shouldn't also get them from PX4
+		return _configured && _mode != UBXMode::RoverWithMovingBase
+		       && _mode != UBXMode::RoverWithStaticBaseUart2;
+	}
+
+	bool shouldPublishRTCM() override
+	{
+		// Only republish emitted RTCM that is meant as corrections for other receivers
+		return _mode == UBXMode::MovingBaseUART1 || _output_mode == OutputMode::RTCM;
+	}
 
 	enum class Board : uint8_t {
 		unknown = 0,
@@ -1181,5 +1192,3 @@ private:
 	const float _heading_offset;
 	const int32_t _uart2_baudrate;
 };
-
-
