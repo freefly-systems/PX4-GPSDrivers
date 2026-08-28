@@ -115,6 +115,11 @@ GPSDriverUBX::configure(unsigned &baudrate, const GPSConfig &config)
 
 		if ((_mode == UBXMode::RoverWithMovingBaseUART1) || (_mode == UBXMode::MovingBaseUART1)) {
 			desired_baudrate = UART1_BAUDRATE_HEADING;
+
+		} else if (_mode == UBXMode::MovingBase && _output_mode == OutputMode::GPSAndRTCM) {
+			// In GPS_UBX_MODE 6, the moving base needs to output both nav and satellite observation
+			// data if PPK is enabled (GPS_DUMP_COMM 2). Increase the baud rate for this.
+			desired_baudrate = UART1_BAUDRATE_MODE_6_PPK;
 		}
 
 		for (baud_i = 0; baud_i < sizeof(baudrates) / sizeof(baudrates[0]); baud_i++) {

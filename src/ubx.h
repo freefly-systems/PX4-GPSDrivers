@@ -64,6 +64,7 @@
 #define UBX_SYNC2             0x62
 
 #define UART1_BAUDRATE_HEADING 921600
+#define UART1_BAUDRATE_MODE_6_PPK 460800
 
 /* Message Classes */
 #define UBX_CLASS_NAV         0x01
